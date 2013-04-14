@@ -30,7 +30,7 @@
  *
  * It is only possible to encode NUM_SEGMENTS bits per stream.
  */
-void decodeWatermarK(int** inputStream, int* secretKey, char* &outputStream)
+void decodeWatermarK(float** inputStream, int* secretKey, char* &outputStream)
 {
   /*
    ****************************************************************************
@@ -38,11 +38,12 @@ void decodeWatermarK(int** inputStream, int* secretKey, char* &outputStream)
    ****************************************************************************
   */
 
-  double coefficientsF[NUM_SEGMENTS][L];
-  double coefficientsR[NUM_SEGMENTS][L];
-  double dctMultiplier;
-  int inputStreamF, inputStreamR;
-  double coefficientF, coefficientR;
+  float coefficientsF[NUM_SEGMENTS][L];
+  float coefficientsR[NUM_SEGMENTS][L];
+  float dctMultiplier;
+  float coefficientF, coefficientR;
+  float inputStreamF, inputStreamR;
+  
   /* Generate the DCT coefficients for each segment */
   for (int segmentIdx = 0; segmentIdx < NUM_SEGMENTS; ++segmentIdx)
   {
@@ -66,10 +67,10 @@ void decodeWatermarK(int** inputStream, int* secretKey, char* &outputStream)
   }
   
   /* Split the DCT coefficients into R frames of length 2M */
-  double framesF[NUM_SEGMENTS][R][TWO_M];
-  double framesR[NUM_SEGMENTS][R][TWO_M];
-  int frameIdx = 0;
-  int kIdx = 0;
+  float framesF[NUM_SEGMENTS][R][TWO_M];
+  float framesR[NUM_SEGMENTS][R][TWO_M];
+  int   frameIdx = 0;
+  int   kIdx = 0;
   for (int segmentIdx = 0; segmentIdx < NUM_SEGMENTS; ++segmentIdx)
   {
     for (int coefficientIdx = 0; coefficientIdx < NUM_COEFFICIENTS; ++coefficientIdx)
@@ -86,10 +87,10 @@ void decodeWatermarK(int** inputStream, int* secretKey, char* &outputStream)
   }
   
   /* Split each frame into M fragments using the PN sequence in the secret key*/
-  double fragmentsF1[NUM_SEGMENTS][R][M];
-  double fragmentsF2[NUM_SEGMENTS][R][M];
-  double fragmentsR1[NUM_SEGMENTS][R][M];
-  double fragmentsR2[NUM_SEGMENTS][R][M];
+  float fragmentsF1[NUM_SEGMENTS][R][M];
+  float fragmentsF2[NUM_SEGMENTS][R][M];
+  float fragmentsR1[NUM_SEGMENTS][R][M];
+  float fragmentsR2[NUM_SEGMENTS][R][M];
 
   for (int segmentIdx = 0; segmentIdx < NUM_SEGMENTS; ++segmentIdx)
   {
@@ -113,18 +114,18 @@ void decodeWatermarK(int** inputStream, int* secretKey, char* &outputStream)
   */
    
   /* Compute the expected value for frames across all segments */
-  double p[NUM_SEGMENTS][R];
-  double p1[NUM_SEGMENTS][R];
-  double p2[NUM_SEGMENTS][R];
-  double pTilde[NUM_SEGMENTS][R];
-  double q[NUM_SEGMENTS][R];
-  double q1[NUM_SEGMENTS][R];
-  double q2[NUM_SEGMENTS][R];
-  double qTilde[NUM_SEGMENTS][R];
-  char   containsWatermarK[NUM_SEGMENTS][R];
+  float p[NUM_SEGMENTS][R];
+  float p1[NUM_SEGMENTS][R];
+  float p2[NUM_SEGMENTS][R];
+  float pTilde[NUM_SEGMENTS][R];
+  float q[NUM_SEGMENTS][R];
+  float q1[NUM_SEGMENTS][R];
+  float q2[NUM_SEGMENTS][R];
+  float qTilde[NUM_SEGMENTS][R];
+  char  containsWatermarK[NUM_SEGMENTS][R];
    
-  double pVal, p1Val, p2Val, pTildeVal, qVal, q1Val, q2Val, qTildeVal;
-  char containsWatermarKVal, isSilent;
+  float pVal, p1Val, p2Val, pTildeVal, qVal, q1Val, q2Val, qTildeVal;
+  char  containsWatermarKVal, isSilent;
   
   for (int segmentIdx = 0; segmentIdx < NUM_SEGMENTS; ++segmentIdx)
   { 
@@ -189,9 +190,9 @@ void decodeWatermarK(int** inputStream, int* secretKey, char* &outputStream)
    ****************************************************************************
   */
   
-  double r1, r2;
-  int numOnes = 0;
-  int numZeros = 0;
+  float r1, r2;
+  int   numOnes = 0;
+  int   numZeros = 0;
   /* Calculate the modified expected value for each segment */
   for (int segmentIdx = 0; segmentIdx < NUM_SEGMENTS; ++segmentIdx)
   {

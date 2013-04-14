@@ -1,8 +1,15 @@
-﻿Build started 4/14/2013 5:04:44 PM.
+﻿Build started 4/14/2013 5:44:04 PM.
      1>Project "C:\Users\Tehan\Three Digit Numbers\595\final_project\Audio-Watermarking\Audio-WatermarKing\Audio-WatermarKing\Audio-WatermarKing.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\embedWatermarK.cpp
-         embedWatermarK.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\decodeWatermarK.cpp
+         decodeWatermarK.cpp
+     1>c:\users\tehan\three digit numbers\595\final_project\audio-watermarking\decodewatermark.cpp(59): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\tehan\three digit numbers\595\final_project\audio-watermarking\decodewatermark.cpp(60): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\tehan\three digit numbers\595\final_project\audio-watermarking\decodewatermark.cpp(61): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\tehan\three digit numbers\595\final_project\audio-watermarking\decodewatermark.cpp(156): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\tehan\three digit numbers\595\final_project\audio-watermarking\decodewatermark.cpp(157): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\tehan\three digit numbers\595\final_project\audio-watermarking\decodewatermark.cpp(161): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\tehan\three digit numbers\595\final_project\audio-watermarking\decodewatermark.cpp(162): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Tehan\Three Digit Numbers\595\final_project\Audio-Watermarking\Audio-WatermarKing\Debug\Audio-WatermarKing.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Tehan\Three Digit Numbers\595\final_project\Audio-Watermarking\Audio-WatermarKing\Debug\Audio-WatermarKing.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Tehan\Three Digit Numbers\595\final_project\Audio-Watermarking\Audio-WatermarKing\Debug\Audio-WatermarKing.lib" /MACHINE:X86 Debug\decodeWatermarK.obj
          Debug\embedWatermarK.obj
@@ -11,4 +18,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.31
+Time Elapsed 00:00:00.40

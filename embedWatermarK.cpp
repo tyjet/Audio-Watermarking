@@ -29,7 +29,7 @@
  *
  * It is only possible to encode NUM_SEGMENTS bits per stream.
  */
-void embedWatermarK(int** inputStream, char* watermarK, int watermarKLength, int** &outputStream, int* &secretKey)
+void embedWatermarK(float** inputStream, char* watermarK, int watermarKLength, float** &outputStream, int* &secretKey)
 {
   /*
    ****************************************************************************
@@ -37,11 +37,11 @@ void embedWatermarK(int** inputStream, char* watermarK, int watermarKLength, int
    ****************************************************************************
   */
 
-  double coefficientsF[NUM_SEGMENTS][L_OVER_TWO];
-  double coefficientsR[NUM_SEGMENTS][L_OVER_TWO];
-  double dctMultiplier;
-  int inputStreamF, inputStreamR;
-  double coefficientF, coefficientR;
+  float coefficientsF[NUM_SEGMENTS][L_OVER_TWO];
+  float coefficientsR[NUM_SEGMENTS][L_OVER_TWO];
+  float dctMultiplier;
+  float inputStreamF, inputStreamR;
+  float coefficientF, coefficientR;
   
   /* Generate the DCT coefficients for each segment */
   for (int segmentIdx = 0; segmentIdx < NUM_SEGMENTS; ++segmentIdx)
@@ -66,10 +66,10 @@ void embedWatermarK(int** inputStream, char* watermarK, int watermarKLength, int
   }
   
   /* Split the DCT coefficients into R frames of length 2M */
-  double framesF[NUM_SEGMENTS][R][TWO_M];
-  double framesR[NUM_SEGMENTS][R][TWO_M];
-  int frameIdx = 0;
-  int kIdx = 0;
+  float framesF[NUM_SEGMENTS][R][TWO_M];
+  float framesR[NUM_SEGMENTS][R][TWO_M];
+  int   frameIdx = 0;
+  int   kIdx = 0;
   for (int segmentIdx = 0; segmentIdx < NUM_SEGMENTS; ++segmentIdx)
   {
     for (int coefficientIdx = 0; coefficientIdx < NUM_COEFFICIENTS; ++coefficientIdx)
@@ -107,14 +107,14 @@ void embedWatermarK(int** inputStream, char* watermarK, int watermarKLength, int
   secretKey = pnSequence;
   
   /* Generate the fragments for each frame */
-  double fragmentsF1[NUM_SEGMENTS][R][M];
-  double fragmentsF2[NUM_SEGMENTS][R][M];
-  double fragmentsR1[NUM_SEGMENTS][R][M];
-  double fragmentsR2[NUM_SEGMENTS][R][M];
+  float fragmentsF1[NUM_SEGMENTS][R][M];
+  float fragmentsF2[NUM_SEGMENTS][R][M];
+  float fragmentsR1[NUM_SEGMENTS][R][M];
+  float fragmentsR2[NUM_SEGMENTS][R][M];
 
   /* This array is not needed in the updated code, but I feel liKe it should be Kept around */
   /*
-  double k[R] // TODO: figure out how to reference k
+  float k[R] // TODO: figure out how to reference k
   for (int idx = 0; idx < R; ++idx)
   {
     k[idx] = 0;
@@ -150,17 +150,17 @@ void embedWatermarK(int** inputStream, char* watermarK, int watermarKLength, int
   */
    
   /* Compute the expected value for frames across all segments */
-  double p[NUM_SEGMENTS][R];
-  double p1[NUM_SEGMENTS][R];
-  double p2[NUM_SEGMENTS][R];
-  double pTilde[NUM_SEGMENTS][R];
-  double q[NUM_SEGMENTS][R];
-  double q1[NUM_SEGMENTS][R];
-  double q2[NUM_SEGMENTS][R];
-  double qTilde[NUM_SEGMENTS][R];
-  char   useFrame[NUM_SEGMENTS][R];
+  float p[NUM_SEGMENTS][R];
+  float p1[NUM_SEGMENTS][R];
+  float p2[NUM_SEGMENTS][R];
+  float pTilde[NUM_SEGMENTS][R];
+  float q[NUM_SEGMENTS][R];
+  float q1[NUM_SEGMENTS][R];
+  float q2[NUM_SEGMENTS][R];
+  float qTilde[NUM_SEGMENTS][R];
+  char  useFrame[NUM_SEGMENTS][R];
    
-  double pVal, p1Val, p2Val, pTildeVal, qVal, q1Val, q2Val, qTildeVal;
+  float pVal, p1Val, p2Val, pTildeVal, qVal, q1Val, q2Val, qTildeVal;
   char useFrameVal, isSilent;
   
   for (int segmentIdx = 0; segmentIdx < NUM_SEGMENTS; ++segmentIdx)
@@ -225,8 +225,8 @@ void embedWatermarK(int** inputStream, char* watermarK, int watermarKLength, int
    ****************************************************************************
   */
   
-  int curWatermarKBit = 0;
-  double pPrime, p1Prime, p2Prime, qPrime, q1Prime, q2Prime;
+  int   curWatermarKBit = 0;
+  float pPrime, p1Prime, p2Prime, qPrime, q1Prime, q2Prime;
   /* Calculate the modified expected value for each segment */
   for (int segmentIdx = 0; segmentIdx < NUM_SEGMENTS && curWatermarKBit < watermarKLength; ++segmentIdx)
   {
@@ -309,9 +309,9 @@ void embedWatermarK(int** inputStream, char* watermarK, int watermarKLength, int
     curWatermarKBit++;
   }
   
-  double idctMultiplier;
-  double outputStreamF = 0.0;
-  double outputStreamR = 0.0;
+  float idctMultiplier;
+  float outputStreamF = 0.0;
+  float outputStreamR = 0.0;
   for (int segmentIdx = 0; segmentIdx < NUM_SEGMENTS; ++segmentIdx)
   {
     for (int sampleIdx = 0; sampleIdx < L_OVER_TWO; ++sampleIdx)
@@ -323,8 +323,8 @@ void embedWatermarK(int** inputStream, char* watermarK, int watermarKLength, int
         outputStreamR += idctMultiplier * coefficientsR[segmentIdx][coefficientIdx] * cos(PI * (2 * segmentIdx + 1) * coefficientIdx) * ONE_OVER_L;            
       }
     
-      outputStream[segmentIdx][sampleIdx] = (int)outputStreamF;
-      outputStream[segmentIdx][sampleIdx + L_OVER_TWO] = (int)outputStreamR;
+      outputStream[segmentIdx][sampleIdx] = outputStreamF;
+      outputStream[segmentIdx][sampleIdx + L_OVER_TWO] = outputStreamR;
     }
   }
 }
